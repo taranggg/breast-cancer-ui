@@ -6,21 +6,28 @@ import Link from "next/link";
 
 export default function HeroSection() {
   return (
-    <section className="relative py-12 md:py-20">
-      {/* Full width hero background image */}
-      <div className="absolute inset-0 w-full h-full z-0">
-        <Image
-          src="/hero.png"
-          alt="Hero background"
-          fill
-          priority
-          className="object-cover w-full h-full"
-        />
-      </div>
+    <section className="relative py-12 md:py-20 overflow-hidden">
+      {/* Soft pink gradient background with animated sparkles */}
+      <div className="absolute inset-0 -z-10 w-full h-full bg-gradient-to-br from-pink-200 via-pink-100 to-white" />
       {/* Animated Blobs */}
-      <div className="absolute inset-0 z-0 pointer-events-none">
-        <div className="absolute top-0 left-0 w-72 h-72 bg-pink-200 rounded-full blur-3xl opacity-40 animate-pulse" />
-        <div className="absolute bottom-0 right-0 w-64 h-64 bg-teal-200 rounded-full blur-3xl opacity-30 animate-pulse" />
+      <div className="absolute top-0 left-0 w-80 h-80 bg-pink-200 rounded-full blur-3xl opacity-40 animate-pulse" />
+      <div className="absolute bottom-0 right-0 w-72 h-72 bg-pink-100 rounded-full blur-3xl opacity-30 animate-pulse" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[28rem] h-[28rem] bg-pink-100 rounded-full blur-2xl opacity-20 animate-pulse" />
+      {/* Animated sparkles */}
+      <div className="absolute inset-0 pointer-events-none z-0">
+        <div className="absolute left-1/4 top-1/3 animate-bounce-slow">
+          <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+            <circle cx="20" cy="20" r="3" fill="#F48FB1" />
+            <circle cx="30" cy="10" r="2" fill="#F8BBD0" />
+            <circle cx="10" cy="30" r="1.5" fill="#F8BBD0" />
+          </svg>
+        </div>
+        <div className="absolute right-1/4 bottom-1/4 animate-bounce">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <circle cx="16" cy="16" r="2.5" fill="#F48FB1" />
+            <circle cx="24" cy="8" r="1.5" fill="#F8BBD0" />
+          </svg>
+        </div>
       </div>
       <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-10 items-center px-4 relative z-10">
         {/* Left */}
@@ -50,38 +57,6 @@ export default function HeroSection() {
             </a>
           </div>
         </div>
-        {/* Right: Illustration Card */}
-        {/* <Card className="relative bg-white/80 rounded-3xl shadow-lg p-8 flex items-center justify-center min-h-[300px]">
-          <svg width="180" height="180" viewBox="0 0 180 180" fill="none">
-            <ellipse cx="90" cy="90" rx="80" ry="70" fill="#FCE4EC" />
-            <ellipse cx="90" cy="110" rx="60" ry="40" fill="#E0F7FA" />
-            <path
-              d="M60 120 Q90 60 120 120"
-              stroke="#F48FB1"
-              strokeWidth="6"
-              fill="none"
-            />
-            <circle
-              cx="90"
-              cy="90"
-              r="18"
-              fill="#FFF"
-              stroke="#80CBC4"
-              strokeWidth="4"
-            />
-            <text
-              x="90"
-              y="95"
-              textAnchor="middle"
-              fontSize="18"
-              fill="#F48FB1"
-              fontWeight="bold"
-            >
-              💖
-            </text>
-          </svg>
-          <div className="absolute -top-8 -right-8 w-24 h-24 bg-pink-200 rounded-full blur-2xl opacity-30 animate-pulse" />
-        </Card> */}
       </div>
     </section>
   );
