@@ -43,7 +43,7 @@
   --radius-xl: calc(var(--radius) + 4px);
 }
 
-::root {
+:root {
   --background: oklch(1.0000 0 0);
   --foreground: oklch(0.6250 0.1339 358.5074);
   --card: oklch(1.0000 0 0);
