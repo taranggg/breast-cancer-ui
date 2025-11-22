@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetTrigger, SheetContent } from "@/components/ui/sheet";
 import { Separator } from "@/components/ui/separator";
 import { useState } from "react";
+import Image from "next/image";
 
 const navLinks = [
   { name: "Home", href: "/" },
@@ -21,11 +22,17 @@ export default function Navbar() {
     <nav className="sticky top-0 z-30 bg-background/80 backdrop-blur border-b border-muted shadow-sm">
       <div className="max-w-5xl mx-auto flex items-center justify-between px-4 py-2">
         {/* Logo */}
-        <Link
-          href="/"
-          className="font-bold text-2xl text-pink-500 tracking-tight"
-        >
-          BreastCare AI
+        <Link href="/" className="flex items-center gap-2">
+          <Image
+            src="/bcAiLogo.png"
+            alt="BreastCare AI Logo"
+            width={40}
+            height={40}
+            className="rounded-full"
+          />
+          <span className="font-bold text-2xl text-pink-500 tracking-tight">
+            BreastCare AI
+          </span>
         </Link>
         {/* Desktop Nav */}
         <div className="hidden md:flex items-center gap-6">

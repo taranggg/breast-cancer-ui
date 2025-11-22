@@ -14,7 +14,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Alert } from "@/components/ui/alert";
 import { Separator } from "@/components/ui/separator";
-import FileUpload from "@/components/ui/file-upload"; // Custom wrapper for file input
+import { FileUpload } from "@/components/ui/file-upload"; // Custom wrapper for file input
 
 const PREDICTION_API_URL = "http://localhost:8000/predict";
 
@@ -49,7 +49,8 @@ export default function PredictionForm() {
   }
 
   // Handle file upload and preview
-  function handleFileChange(file: File | null) {
+  function handleFileChange(files: File[]) {
+    const file = files[0] || null;
     setForm((f) => ({ ...f, image: file }));
     setErrors((e) => ({ ...e, image: "" }));
     if (file) {
@@ -182,13 +183,7 @@ export default function PredictionForm() {
         {/* Image Upload */}
         <div>
           <Label htmlFor="image">Breast Scan Image</Label>
-          <FileUpload
-            id="image"
-            accept=".png,.jpg,.jpeg"
-            onFileChange={handleFileChange}
-            aria-invalid={!!errors.image}
-            aria-describedby={errors.image ? "image-error" : undefined}
-          />
+          <FileUpload onChange={handleFileChange} />
           <div className="text-xs text-muted-foreground mt-2">
             Your image is processed securely for prediction only and not stored
             permanently.

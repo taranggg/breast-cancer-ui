@@ -1,17 +1,28 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import Image from "next/image";
 import Link from "next/link";
 
 export default function HeroSection() {
   return (
     <section className="relative py-12 md:py-20 bg-background">
+      {/* Full width hero background image */}
+      <div className="absolute inset-0 -z-10 w-full h-full">
+        <Image
+          src="/hero.png"
+          alt="Hero background"
+          fill
+          priority
+          className="object-cover w-full h-full"
+        />
+      </div>
       {/* Animated Blobs */}
       <div className="absolute inset-0 -z-10 pointer-events-none">
         <div className="absolute top-0 left-0 w-72 h-72 bg-pink-200 rounded-full blur-3xl opacity-40 animate-pulse" />
         <div className="absolute bottom-0 right-0 w-64 h-64 bg-teal-200 rounded-full blur-3xl opacity-30 animate-pulse" />
       </div>
-      <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-10 items-center px-4">
+      <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-10 items-center px-4 relative z-10">
         {/* Left */}
         <div>
           <Badge className="mb-4 bg-pink-100 text-pink-600 rounded-xl px-3 py-1 text-sm shadow">
