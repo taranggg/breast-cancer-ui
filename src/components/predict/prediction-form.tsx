@@ -1,6 +1,7 @@
 "use client";
 import { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import { Card } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -13,7 +14,6 @@ import {
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Alert } from "@/components/ui/alert";
-import { Separator } from "@/components/ui/separator";
 import { FileUpload } from "@/components/ui/file-upload"; // Custom wrapper for file input
 
 const PREDICTION_API_URL = "http://localhost:8000/predict";
@@ -96,7 +96,7 @@ export default function PredictionForm() {
   }
 
   return (
-    <Card className="max-w-lg mx-auto mt-12 p-8 rounded-3xl bg-white/60 backdrop-blur-xl border border-white/70 shadow-lg">
+    <Card className="max-w-lg mx-auto mt-12 mb-12 p-8 rounded-3xl bg-white/60 backdrop-blur-xl border border-white/70 shadow-lg">
       <h2 className="text-2xl font-bold text-foreground mb-2">
         AI-Powered Breast Scan Check
       </h2>
@@ -189,9 +189,11 @@ export default function PredictionForm() {
             permanently.
           </div>
           {imagePreview && (
-            <img
+            <Image
               src={imagePreview}
               alt="Preview"
+              width={128}
+              height={128}
               className="mt-2 rounded-xl border w-32 h-32 object-cover"
             />
           )}

@@ -4,7 +4,7 @@ export default function PredictionBackground({
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-screen w-full bg-[#FFF9FB] relative overflow-hidden">
+    <div className="w-full bg-[#00ffff] relative overflow-hidden py-12">
       {/* Animated Blobs */}
       <div className="absolute top-0 left-0 w-80 h-80 bg-pink-200 rounded-full blur-3xl opacity-40 animate-pulse" />
       <div className="absolute bottom-0 right-0 w-72 h-72 bg-teal-200 rounded-full blur-3xl opacity-30 animate-pulse" />
