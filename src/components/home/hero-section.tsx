@@ -6,9 +6,9 @@ import Link from "next/link";
 
 export default function HeroSection() {
   return (
-    <section className="relative py-12 md:py-20 bg-background">
+    <section className="relative py-12 md:py-20">
       {/* Full width hero background image */}
-      <div className="absolute inset-0 -z-10 w-full h-full">
+      <div className="absolute inset-0 w-full h-full z-0">
         <Image
           src="/hero.png"
           alt="Hero background"
@@ -18,7 +18,7 @@ export default function HeroSection() {
         />
       </div>
       {/* Animated Blobs */}
-      <div className="absolute inset-0 -z-10 pointer-events-none">
+      <div className="absolute inset-0 z-0 pointer-events-none">
         <div className="absolute top-0 left-0 w-72 h-72 bg-pink-200 rounded-full blur-3xl opacity-40 animate-pulse" />
         <div className="absolute bottom-0 right-0 w-64 h-64 bg-teal-200 rounded-full blur-3xl opacity-30 animate-pulse" />
       </div>
@@ -51,8 +51,7 @@ export default function HeroSection() {
           </div>
         </div>
         {/* Right: Illustration Card */}
-        <Card className="relative bg-white/80 rounded-3xl shadow-lg p-8 flex items-center justify-center min-h-[300px]">
-          {/* Abstract SVG illustration */}
+        {/* <Card className="relative bg-white/80 rounded-3xl shadow-lg p-8 flex items-center justify-center min-h-[300px]">
           <svg width="180" height="180" viewBox="0 0 180 180" fill="none">
             <ellipse cx="90" cy="90" rx="80" ry="70" fill="#FCE4EC" />
             <ellipse cx="90" cy="110" rx="60" ry="40" fill="#E0F7FA" />
@@ -81,9 +80,8 @@ export default function HeroSection() {
               💖
             </text>
           </svg>
-          {/* Animated blob */}
           <div className="absolute -top-8 -right-8 w-24 h-24 bg-pink-200 rounded-full blur-2xl opacity-30 animate-pulse" />
-        </Card>
+        </Card> */}
       </div>
     </section>
   );
