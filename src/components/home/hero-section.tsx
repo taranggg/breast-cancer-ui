@@ -10,9 +10,31 @@ function HeroText() {
       <Badge className="mb-4 bg-pink-100 text-pink-600 rounded-xl px-3 py-1 text-sm shadow">
         Your Health, Your Power
       </Badge>
-      <h1 className="text-4xl md:text-6xl font-extrabold text-foreground mb-6 leading-tight">
-        Reading Between the Cells
+      <h1
+        className="text-5xl md:text-7xl font-extrabold mb-6 leading-tight"
+        style={{
+          WebkitBackgroundClip: "text",
+          backgroundClip: "text",
+          color: "transparent",
+        }}
+      >
+        <span className="animate-gradient-text">Reading Between the Cells</span>
       </h1>
+      <style>{`
+        @keyframes gradientMove {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
+        }
+        .animate-gradient-text {
+          background: linear-gradient(90deg, #0a5353, #fce4ec, #d72660, #1699adff);
+          background-size: 400% 400%;
+          -webkit-background-clip: text;
+          background-clip: text;
+          color: transparent;
+          animation: gradientMove 24s ease-in-out infinite;
+        }
+      `}</style>
       <p className="text-lg md:text-xl text-muted-foreground mb-8">
         Scan. Discover. Take control.
       </p>
