@@ -1,11 +1,8 @@
 "use client";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState, startTransition } from "react";
-// import axiosInstance from "@/util/axiosInstance";
-// import { API_PATH } from "@/util/apiPath";
+import { useEffect, useState } from "react";
 import PredictionBackground from "@/components/predict/prediction-background";
 import ResultSummary from "@/components/result/result-summary";
-import { mockResult } from "@/lib/mock-result";
 
 type ResultType = {
   name: string;
@@ -22,24 +19,24 @@ type ResultType = {
 export default function ResultPage() {
   const searchParams = useSearchParams();
   const data = searchParams.get("data");
+
   const [result, setResult] = useState<ResultType | null>(null);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
 
   useEffect(() => {
     if (data) {
-      let parsed: ResultType | null = null;
-      let errorMsg = "";
       try {
-        parsed = JSON.parse(data);
-      } catch {
-        parsed = null;
-        errorMsg = "Invalid result data format.";
-      }
-      startTransition(() => {
+        const parsed: ResultType = JSON.parse(data);
         setResult(parsed);
-        if (errorMsg) setError(errorMsg);
-      });
+        setError("");
+      } catch {
+        setResult(null);
+        setError("Invalid result data format.");
+      }
+    } else {
+      setResult(null);
+      setError("");
     }
   }, [data]);
 
@@ -56,7 +53,9 @@ export default function ResultPage() {
       ) : result ? (
         <ResultSummary result={result} />
       ) : (
-        <ResultSummary result={mockResult} />
+        <div className="flex items-center justify-center min-h-[200px] text-gray-500">
+          No result available.
+        </div>
       )}
     </PredictionBackground>
   );

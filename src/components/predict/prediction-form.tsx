@@ -22,6 +22,7 @@ import { Button } from "@/components/ui/button";
 import { Alert } from "@/components/ui/alert";
 import { FileUpload } from "@/components/ui/file-upload";
 import { LoaderThree } from "@/components/ui/loader";
+import { log } from "console";
 
 type FormValues = {
   name: string;
@@ -65,7 +66,24 @@ export default function PredictionForm() {
       }
 
       const response = await axiosInstance.post(API_PATH.Predict, formData);
-      const result = response.data;
+      // Combine frontend form data with API response
+      const apiResult = response.data;
+      // Find highest probability for prediction
+      const predictionKey = Object.keys(apiResult).reduce((a, b) =>
+        apiResult[a] > apiResult[b] ? a : b
+      );
+      const result = {
+        name: data.name,
+        age: data.age,
+        gender: data.gender,
+        prediction:
+          predictionKey.charAt(0).toUpperCase() + predictionKey.slice(1),
+        probabilities: {
+          benign: apiResult.benign,
+          malignant: apiResult.malignant,
+          normal: apiResult.normal,
+        },
+      };
       router.push(`/result?data=${encodeURIComponent(JSON.stringify(result))}`);
     } catch (err) {
       console.error(err);
@@ -233,9 +251,13 @@ export default function PredictionForm() {
                   field.onChange(file);
                   if (file) {
                     const reader = new FileReader();
-                    reader.onload = (e) =>
-                      setImagePreview(e.target?.result as string);
+                    // reader.onload = (e) =>
+                    //   setImagePreview(e.target?.result as string);
+                    // reader.readAsDataURL(file);
                     reader.readAsDataURL(file);
+                    reader.addEventListener("load", (e) => {
+                      setImagePreview(e.target?.result as string);
+                    });
                   } else {
                     setImagePreview(null);
                   }

@@ -1,4 +1,4 @@
-// ...existing imports...
+"use client";
 import { AnimatedProgressBar } from "./AnimatedProgressBar";
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -7,7 +7,6 @@ import { Alert } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { useRouter } from "next/navigation";
-import { mockResult } from "@/lib/mock-result";
 
 function getPredictionColor(prediction: string) {
   if (prediction === "Normal") return "text-emerald-600 bg-emerald-50/70";
@@ -37,11 +36,19 @@ type ResultType = {
 
 export default function ResultSummary({ result }: { result?: ResultType }) {
   const router = useRouter();
-  const data = result || mockResult;
-  const { name, age, gender, prediction, probabilities } = data;
+  const data = result;
+  const name = data?.name ?? "";
+  const age = data?.age ?? "";
+  const gender = data?.gender ?? "";
+  const prediction = data?.prediction ?? "";
+  const probabilities = data?.probabilities ?? {
+    benign: 0,
+    malignant: 0,
+    normal: 0,
+  };
   const [showAccordion, setShowAccordion] = React.useState(false);
   const [openDetails, setOpenDetails] = React.useState<string[]>([
-    prediction.toLowerCase(),
+    prediction ? prediction.toLowerCase() : "",
   ]);
 
   const handleToggleDetail = (key: string) => {
