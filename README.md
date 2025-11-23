@@ -1,36 +1,134 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Breast Cancer UI
+
+A modern Next.js web application for breast cancer prediction and result visualization using AI. This project provides a user-friendly interface for uploading medical images, receiving predictions, and viewing results securely.
+
+## Features
+
+- Upload patient details and medical images for prediction
+- View AI-generated results and probabilities
+- Responsive, clean UI with modern design
+- Centralized API path and Axios for API calls
+- Environment variable support for API base URL
 
 ## Getting Started
 
-First, run the development server:
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/taranggg/breast-cancer-ui.git
+cd breast-cancer-ui
+```
+
+### 2. Install Dependencies
+
+```bash
+npm install
+```
+
+### 3. Set Up Environment Variables
+
+Copy `.env.example` to `.env.local` and update as needed:
+
+```bash
+cp .env.example .env.local
+```
+
+Edit `.env.local` to set your backend API base URL:
+
+```env
+NEXT_PUBLIC_API_BASE_URL=http://localhost:3000
+```
+
+Change the URL to your backend API base if needed.
+
+### 4. Run the Development Server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Visit [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Connecting to Backend (BE)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- The frontend expects a backend API running and accessible at the URL set in `NEXT_PUBLIC_API_BASE_URL`.
+- Two main endpoints are used:
+  - `POST /predict` (for predictions)
+  - `GET /health` (for result/status)
+- Update the API base URL in `.env.local` to match your backend address.
 
-## Learn More
+## API Data Format
 
-To learn more about Next.js, take a look at the following resources:
+### Prediction API (`POST /predict`)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Request:**
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+  - Content-Type: `multipart/form-data`
+  - Fields:
+    - `name`: string (patient name)
+    - `age`: number or string
+    - `gender`: string (`Male` or `Female`)
+    - `image`: file (medical image)
 
-## Deploy on Vercel
+- **Example Request (FormData):**
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```json
+{
+	"name": "Jane Doe",
+	"age": 45,
+	"gender": "Female",
+	"image": <file>
+}
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Response:**
+
+```json
+{
+  "name": "Jane Doe",
+  "age": 45,
+  "gender": "Female",
+  "prediction": "Benign", // or "Normal", "Malignant"
+  "probabilities": {
+    "benign": 0.65,
+    "malignant": 0.1,
+    "normal": 0.25
+  }
+}
+```
+
+### Result API (`GET /health`)
+
+- **Request:**
+  - No parameters required
+- **Response:**
+  - Same format as prediction response above
+
+## Folder Structure
+
+```
+breast-cancer-ui/
+├── src/
+│   ├── app/
+│   ├── components/
+│   ├── util/
+│   └── lib/
+├── public/
+├── .env.local
+├── package.json
+├── README.md
+└── ...
+```
+
+## Customization
+
+- Update API paths in `src/util/apiPath.ts` if backend endpoints change.
+- Adjust Axios config in `src/util/axiosInstance.ts` for custom headers or interceptors.
+
+## Contributing
+
+Pull requests and issues are welcome! Please open an issue for bugs or feature requests.
+
+## License
+
+MIT

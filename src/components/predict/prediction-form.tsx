@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import axiosInstance from "@/util/axiosInstance";
+import { API_PATH } from "@/util/apiPath";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { useForm, Controller } from "react-hook-form";
@@ -19,8 +21,6 @@ import {
 import { Button } from "@/components/ui/button";
 import { Alert } from "@/components/ui/alert";
 import { FileUpload } from "@/components/ui/file-upload";
-
-const PREDICTION_API_URL = "http://localhost:8000/predict";
 
 type FormValues = {
   name: string;
@@ -63,14 +63,8 @@ export default function PredictionForm() {
         formData.append("image", data.image);
       }
 
-      const res = await fetch(PREDICTION_API_URL, {
-        method: "POST",
-        body: formData,
-      });
-
-      if (!res.ok) throw new Error("API error");
-
-      const result = await res.json();
+      const response = await axiosInstance.post(API_PATH.Predict, formData);
+      const result = response.data;
       router.push(`/result?data=${encodeURIComponent(JSON.stringify(result))}`);
     } catch (err) {
       console.error(err);
