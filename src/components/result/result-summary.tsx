@@ -1,17 +1,18 @@
+// ...existing imports...
+import { AnimatedProgressBar } from "./AnimatedProgressBar";
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Lightbulb } from "lucide-react";
 import { Alert } from "@/components/ui/alert";
-import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { useRouter } from "next/navigation";
 import { mockResult } from "@/lib/mock-result";
 
 function getPredictionColor(prediction: string) {
-  if (prediction === "Normal") return "text-emerald-600 bg-emerald-50";
-  if (prediction === "Benign") return "text-teal-600 bg-teal-50";
-  return "text-amber-700 bg-amber-50";
+  if (prediction === "Normal") return "text-emerald-600 bg-emerald-50/70";
+  if (prediction === "Benign") return "text-teal-600 bg-teal-50/70";
+  return "text-amber-700 bg-amber-50/70";
 }
 
 function getPredictionMessage(prediction: string) {
@@ -40,18 +41,20 @@ export default function ResultSummary({ result }: { result?: ResultType }) {
   const { name, age, gender, prediction, probabilities } = data;
   const [showAccordion, setShowAccordion] = React.useState(false);
   const [openDetail, setOpenDetail] = React.useState<string | null>(null);
+
   return (
-    <div className="max-w-2xl mx-auto mt-12 p-6 bg-white/80 rounded-3xl border shadow-lg">
+    <div className="max-w-2xl mx-auto mt-12 p-6 sm:p-8 rounded-3xl border border-white/60 bg-white/30 shadow-[0_18px_45px_rgba(148,163,184,0.35)] backdrop-blur-2xl">
       {/* Remember Alert */}
       <Alert
         variant="default"
-        className="mb-6 bg-pink-50 border-pink-200 text-pink-700 text-left"
+        className="mb-6 bg-pink-50/80 border-pink-200 text-pink-700 text-left"
       >
         <span className="block">
           <strong>Remember:</strong> This is not a medical diagnosis. Please
           consult a doctor for confirmation and further guidance.
         </span>
       </Alert>
+
       {/* Simple Report Section */}
       <div className="mb-6 grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
         <div>
@@ -79,11 +82,14 @@ export default function ResultSummary({ result }: { result?: ResultType }) {
           </span>
         </div>
       </div>
+
       <Separator className="my-6" />
+
+      {/* Prediction card */}
       <div
         className={`text-center mb-8 ${getPredictionColor(
           prediction
-        )} bg-white/80 rounded-2xl p-8 border`}
+        )} rounded-2xl p-8 border border-white/60 bg-white/40 backdrop-blur-xl shadow-[0_14px_35px_rgba(148,163,184,0.35)]`}
       >
         <span className="text-lg font-semibold mb-2 block">
           Overall Prediction
@@ -94,31 +100,38 @@ export default function ResultSummary({ result }: { result?: ResultType }) {
         </p>
         <Separator className="my-4" />
         <div className="w-full space-y-4">
-          {(["benign", "malignant", "normal"] as const).map((key) => (
-            <div key={key} className="flex items-center gap-4">
-              <span className="w-24 font-medium capitalize">
-                {key === "malignant"
-                  ? "Malignant"
-                  : key.charAt(0).toUpperCase() + key.slice(1)}
-              </span>
-              <Progress
-                value={probabilities[key]}
-                className={`flex-1 h-4 rounded-full ${
-                  key === "benign"
-                    ? "bg-teal-100"
-                    : key === "malignant"
-                    ? "bg-amber-100"
-                    : "bg-emerald-100"
-                }`}
+          {(["benign", "malignant", "normal"] as const).map((key) => {
+            const percent = probabilities[key];
+            const barColor =
+              key === "benign"
+                ? "bg-teal-100"
+                : key === "malignant"
+                ? "bg-amber-100"
+                : "bg-emerald-100";
+            const textColor =
+              key === "benign"
+                ? "text-teal-700"
+                : key === "malignant"
+                ? "text-amber-700"
+                : "text-emerald-700";
+            return (
+              <AnimatedProgressBar
+                key={key}
+                label={
+                  key === "malignant"
+                    ? "Malignant"
+                    : key.charAt(0).toUpperCase() + key.slice(1)
+                }
+                percent={percent}
+                barColor={barColor}
+                textColor={textColor}
               />
-              <span className="w-12 text-right font-semibold">
-                {probabilities[key].toFixed(1)}%
-              </span>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
-      {/* Info Bulb Icon & Accordion - moved before buttons */}
+
+      {/* Info Bulb Icon & Accordion */}
       <div className="flex items-center gap-2 mb-4">
         <button
           type="button"
@@ -133,6 +146,7 @@ export default function ResultSummary({ result }: { result?: ResultType }) {
           <span className="font-medium">What do these terms mean?</span>
         </button>
       </div>
+
       <AnimatePresence>
         {showAccordion && (
           <motion.div
@@ -142,7 +156,7 @@ export default function ResultSummary({ result }: { result?: ResultType }) {
             transition={{ duration: 0.22, ease: [0.4, 0, 0.2, 1] }}
             className="mb-6"
           >
-            <div className="rounded-xl border bg-pink-50 p-4 text-pink-900 shadow">
+            <div className="rounded-xl border border-pink-100 bg-pink-50/80 p-4 text-pink-900 shadow">
               <h3 className="font-semibold mb-2">
                 Explanation in simple terms:
               </h3>
@@ -200,21 +214,24 @@ export default function ResultSummary({ result }: { result?: ResultType }) {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Buttons */}
       <div className="flex flex-col sm:flex-row gap-4 justify-center mb-6">
         <Button
-          className="rounded-xl bg-pink-500 text-white shadow hover:bg-pink-400 w-full sm:w-auto"
+          className="w-full sm:w-auto h-11 rounded-2xl border border-pink-200 bg-pink-500/70 text-white font-semibold shadow-[0_10px_30px_rgba(244,114,182,0.55)] backdrop-blur-md hover:bg-pink-500/85 hover:border-pink-300 disabled:opacity-70 disabled:cursor-not-allowed"
           onClick={() => router.push("/predict")}
         >
           Check Another Image
         </Button>
         <Button
           variant="outline"
-          className="rounded-xl w-full sm:w-auto"
+          className="w-full sm:w-auto h-11 rounded-2xl border border-white/70 bg-white/30 text-pink-700 shadow-[0_10px_25px_rgba(148,163,184,0.35)] backdrop-blur-md hover:bg-white/60 hover:text-pink-800"
           onClick={() => router.push("/")}
         >
           Back to Home
         </Button>
       </div>
+
       <Alert
         variant="default"
         className="mt-2 bg-muted/40 border text-muted-foreground text-left"
