@@ -30,10 +30,10 @@ function StatsCard({ value, label }: StatsCardProps) {
 
 export default function InfoSections() {
   return (
-    <section id="learn-more" className="w-full relative py-16 px-0">
+    <section id="breast-cancer-info" className="w-full relative py-16 px-0">
       <div className="max-w-6xl mx-auto px-4">
-        <h2 className="text-3xl md:text-4xl font-bold text-center text-pink-700 mb-12">
-          Learn About Breast Cancer
+        <h2 className="text-6xl md:text-4xl font-bold text-center text-pink-700 mb-12">
+          Learn About Breast Cancer.
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-8 items-start">
           {/* Left main card */}

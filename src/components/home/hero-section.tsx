@@ -1,10 +1,7 @@
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
 import { SparklesCore } from "@/components/ui/sparkles";
-import { BackgroundGradientAnimation } from "@/components/ui/background-gradient-animation";
-
 function HeroText() {
   return (
     <div>
@@ -29,9 +26,12 @@ function HeroText() {
       </p>
       <div className="flex flex-col sm:flex-row gap-4">
         <Link href="/predict">
-          <Button className="rounded-xl bg-pink-500 text-white shadow hover:bg-pink-400 w-full sm:w-auto text-lg font-semibold">
+          <button
+            className="w-full sm:w-auto px-6 py-3 rounded-full text-lg font-semibold shadow-lg backdrop-blur-md bg-white/20 border border-pink-300/60 hover:from-pink-300/80 hover:to-teal-300/80 transition-all duration-300 text-pink-600 hover:text-teal-600"
+            type="button"
+          >
             Start Your AI Scan
-          </Button>
+          </button>
         </Link>
       </div>
     </div>
@@ -55,14 +55,18 @@ function HeroImage() {
   );
 }
 
-export default function HeroSection() {
+function HeroSection() {
   return (
     <section className="relative py-16 md:py-24 overflow-hidden bg-transparent">
-      {/* <BackgroundGradientAnimation
-        containerClassName="absolute inset-0 w-full h-full -z-10 pointer-events-none"
-        size="80%"
-        blendingValue="hard-light"
-      /> */}
+      <div className="absolute inset-0 w-full h-full -z-10 pointer-events-none">
+        <SparklesCore
+          background="transparent"
+          minSize={0.6}
+          maxSize={2}
+          particleDensity={85}
+          className="w-full h-full"
+        />
+      </div>
       <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-12 items-center px-4 relative z-10 bg-transparent">
         <HeroText />
         <HeroImage />
@@ -70,3 +74,5 @@ export default function HeroSection() {
     </section>
   );
 }
+
+export default HeroSection;

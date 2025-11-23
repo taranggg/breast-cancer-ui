@@ -58,7 +58,7 @@ export default function AboutProjectSection() {
       <div className="max-w-7xl mx-auto px-4">
         <div className="bg-white/40 backdrop-blur-xl border border-white/60 rounded-2xl shadow-lg p-8 md:p-12 flex flex-col gap-8 max-w-6xl mx-auto">
           <h2 className="text-3xl md:text-4xl font-bold text-pink-700 mb-2">
-            About This Website
+            About This Website.
           </h2>
           <p className="text-lg text-muted-foreground">
             This website is an AI-powered breast cancer risk screening tool
