@@ -171,8 +171,8 @@ export default function PredictionForm() {
                 aria-describedby={errors.age ? "age-error" : undefined}
                 {...register("age", {
                   required: "Age is required.",
-                  min: { value: 18, message: "Age must be at least 18." },
-                  max: { value: 90, message: "Age must be 90 or below." },
+                  min: { value: 1, message: "Age must be at least 1." },
+                  max: { value: 150, message: "Age must be 150 or below." },
                 })}
               />
               {errors.age && (
