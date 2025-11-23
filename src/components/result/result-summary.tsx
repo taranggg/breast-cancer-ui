@@ -241,13 +241,6 @@ export default function ResultSummary({ result }: { result?: ResultType }) {
         >
           Check Another Image
         </Button>
-        <Button
-          variant="outline"
-          className="w-full sm:w-auto h-11 rounded-2xl border border-white/70 bg-white/30 text-pink-700 shadow-[0_10px_25px_rgba(148,163,184,0.35)] backdrop-blur-md hover:bg-white/60 hover:text-pink-800"
-          onClick={() => router.push("/")}
-        >
-          Back to Home
-        </Button>
       </div>
 
       <Alert
