@@ -40,7 +40,15 @@ export default function ResultSummary({ result }: { result?: ResultType }) {
   const data = result || mockResult;
   const { name, age, gender, prediction, probabilities } = data;
   const [showAccordion, setShowAccordion] = React.useState(false);
-  const [openDetail, setOpenDetail] = React.useState<string | null>(null);
+  const [openDetails, setOpenDetails] = React.useState<string[]>([
+    prediction.toLowerCase(),
+  ]);
+
+  const handleToggleDetail = (key: string) => {
+    setOpenDetails((prev) =>
+      prev.includes(key) ? prev.filter((item) => item !== key) : [...prev, key]
+    );
+  };
 
   return (
     <div className="max-w-2xl mx-auto mt-12 p-6 sm:p-8 rounded-3xl border border-white/60 bg-white/30 shadow-[0_18px_45px_rgba(148,163,184,0.35)] backdrop-blur-2xl">
@@ -139,7 +147,7 @@ export default function ResultSummary({ result }: { result?: ResultType }) {
           className="flex items-center gap-2 text-pink-600 hover:text-pink-800 focus:outline-none"
           onClick={() => {
             setShowAccordion((v) => !v);
-            setOpenDetail(prediction.toLowerCase());
+            setOpenDetails([prediction.toLowerCase()]);
           }}
         >
           <Lightbulb className="w-6 h-6" />
@@ -161,12 +169,16 @@ export default function ResultSummary({ result }: { result?: ResultType }) {
                 Explanation in simple terms:
               </h3>
               <div className="space-y-2">
-                <details open={openDetail === "benign"} className="group">
+                <details
+                  open={openDetails.includes("benign")}
+                  className="group"
+                >
                   <summary
                     className="cursor-pointer font-semibold text-teal-700"
-                    onClick={() =>
-                      setOpenDetail(openDetail === "benign" ? null : "benign")
-                    }
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleToggleDetail("benign");
+                    }}
                   >
                     Benign
                   </summary>
@@ -177,14 +189,16 @@ export default function ResultSummary({ result }: { result?: ResultType }) {
                     life-threatening.
                   </div>
                 </details>
-                <details open={openDetail === "malignant"} className="group">
+                <details
+                  open={openDetails.includes("malignant")}
+                  className="group"
+                >
                   <summary
                     className="cursor-pointer font-semibold text-amber-700"
-                    onClick={() =>
-                      setOpenDetail(
-                        openDetail === "malignant" ? null : "malignant"
-                      )
-                    }
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleToggleDetail("malignant");
+                    }}
                   >
                     Malignant
                   </summary>
@@ -194,12 +208,16 @@ export default function ResultSummary({ result }: { result?: ResultType }) {
                     doctor quickly for more tests and treatment.
                   </div>
                 </details>
-                <details open={openDetail === "normal"} className="group">
+                <details
+                  open={openDetails.includes("normal")}
+                  className="group"
+                >
                   <summary
                     className="cursor-pointer font-semibold text-emerald-700"
-                    onClick={() =>
-                      setOpenDetail(openDetail === "normal" ? null : "normal")
-                    }
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleToggleDetail("normal");
+                    }}
                   >
                     Normal
                   </summary>
