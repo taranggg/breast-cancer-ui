@@ -46,8 +46,8 @@ export function AnimatedProgressBar({
           className="absolute left-0 top-0 h-4 rounded-full bg-pink-400"
         />
       </div>
-      <span className={`w-12 text-right font-semibold ${textColor}`}>
-        {displayPercent.toFixed(1)}%
+      <span className={`w-24 text-right font-semibold ${textColor}`}>
+        {displayPercent.toFixed(8)}%
       </span>
     </div>
   );
