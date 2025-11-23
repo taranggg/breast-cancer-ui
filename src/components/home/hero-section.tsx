@@ -57,13 +57,13 @@ function HeroImage() {
 
 export default function HeroSection() {
   return (
-    <section className="relative py-16 md:py-24 overflow-hidden">
-      <BackgroundGradientAnimation
-        containerClassName="absolute inset-0 w-full h-full -z-10"
+    <section className="relative py-16 md:py-24 overflow-hidden bg-transparent">
+      {/* <BackgroundGradientAnimation
+        containerClassName="absolute inset-0 w-full h-full -z-10 pointer-events-none"
         size="80%"
         blendingValue="hard-light"
-      />
-      <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-12 items-center px-4 relative z-10">
+      /> */}
+      <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-12 items-center px-4 relative z-10 bg-transparent">
         <HeroText />
         <HeroImage />
       </div>

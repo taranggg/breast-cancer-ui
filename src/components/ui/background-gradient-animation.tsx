@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 
 export const BackgroundGradientAnimation = ({
   gradientBackgroundStart = "rgb(253, 181, 205)",
-  gradientBackgroundEnd = " rgb(252, 228, 236)",
+  gradientBackgroundEnd = "rgb(253, 246, 240)",
   firstColor = "215, 38, 96",
   secondColor = "22, 138, 173",
   thirdColor = "215, 38, 96",
@@ -81,10 +81,12 @@ export const BackgroundGradientAnimation = ({
     }
   };
 
-  const [isSafari, setIsSafari] = useState(false);
-  useEffect(() => {
-    setIsSafari(/^((?!chrome|android).)*safari/i.test(navigator.userAgent));
-  }, []);
+  const [isSafari] = useState(() => {
+    if (typeof window !== "undefined" && window.navigator) {
+      return /^((?!chrome|android).)*safari/i.test(window.navigator.userAgent);
+    }
+    return false;
+  });
 
   return (
     <div
