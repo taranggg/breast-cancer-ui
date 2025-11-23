@@ -1,38 +1,61 @@
 "use client";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, startTransition } from "react";
 import axiosInstance from "@/util/axiosInstance";
 import { API_PATH } from "@/util/apiPath";
 import PredictionBackground from "@/components/predict/prediction-background";
 import ResultSummary from "@/components/result/result-summary";
 import { mockResult } from "@/lib/mock-result";
 
+type ResultType = {
+  name: string;
+  age: number;
+  gender: string;
+  prediction: string;
+  probabilities: {
+    benign: number;
+    malignant: number;
+    normal: number;
+  };
+};
+
 export default function ResultPage() {
   const searchParams = useSearchParams();
   const data = searchParams.get("data");
-  const [result, setResult] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [result, setResult] = useState<ResultType | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string>("");
 
   useEffect(() => {
     if (data) {
+      let parsed: ResultType | null = null;
+      let errorMsg = "";
       try {
-        setResult(JSON.parse(data));
+        parsed = JSON.parse(data);
       } catch {
-        setResult(null);
+        parsed = null;
+        errorMsg = "Invalid result data format.";
       }
+      startTransition(() => {
+        setResult(parsed);
+        if (errorMsg) setError(errorMsg);
+      });
     } else {
-      setLoading(true);
+      startTransition(() => {
+        setLoading(true);
+      });
       axiosInstance
-        .get(API_PATH.Result)
-        .then((response) => {
+        .get<ResultType>(API_PATH.Result)
+        .then((response: { data: ResultType }) => {
           setResult(response.data);
         })
         .catch(() => {
           setError("Failed to fetch result data.");
         })
         .finally(() => {
-          setLoading(false);
+          startTransition(() => {
+            setLoading(false);
+          });
         });
     }
   }, [data]);
