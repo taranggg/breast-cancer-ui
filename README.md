@@ -17,6 +17,7 @@ A modern Next.js web application for breast cancer prediction and result visuali
 ```bash
 git clone https://github.com/taranggg/breast-cancer-ui.git
 cd breast-cancer-ui
+code .
 ```
 
 ### 2. Install Dependencies
