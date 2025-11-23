@@ -213,6 +213,15 @@ export default function PredictionForm() {
                       <SelectContent>
                         <SelectItem value="Female">Female</SelectItem>
                         <SelectItem value="Male">Male</SelectItem>
+                        <SelectItem value="Transgender Female">
+                          Transgender Female
+                        </SelectItem>
+                        <SelectItem value="Transgender Male">
+                          Transgender Male
+                        </SelectItem>
+                        <SelectItem value="Non-binary">Non-binary</SelectItem>
+                        <SelectItem value="Genderqueer">Genderqueer</SelectItem>
+                        <SelectItem value="Intersex">Intersex</SelectItem>
                         <SelectItem value="Other">Other</SelectItem>
                         <SelectItem value="Prefer not to say">
                           Prefer not to say
