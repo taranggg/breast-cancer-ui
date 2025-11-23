@@ -1,8 +1,8 @@
 "use client";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState, startTransition } from "react";
-import axiosInstance from "@/util/axiosInstance";
-import { API_PATH } from "@/util/apiPath";
+// import axiosInstance from "@/util/axiosInstance";
+// import { API_PATH } from "@/util/apiPath";
 import PredictionBackground from "@/components/predict/prediction-background";
 import ResultSummary from "@/components/result/result-summary";
 import { mockResult } from "@/lib/mock-result";
@@ -40,23 +40,6 @@ export default function ResultPage() {
         setResult(parsed);
         if (errorMsg) setError(errorMsg);
       });
-    } else {
-      startTransition(() => {
-        setLoading(true);
-      });
-      axiosInstance
-        .get<ResultType>(API_PATH.Result)
-        .then((response: { data: ResultType }) => {
-          setResult(response.data);
-        })
-        .catch(() => {
-          setError("Failed to fetch result data.");
-        })
-        .finally(() => {
-          startTransition(() => {
-            setLoading(false);
-          });
-        });
     }
   }, [data]);
 

@@ -21,6 +21,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Alert } from "@/components/ui/alert";
 import { FileUpload } from "@/components/ui/file-upload";
+import { LoaderThree } from "@/components/ui/loader";
 
 type FormValues = {
   name: string;
@@ -73,6 +74,14 @@ export default function PredictionForm() {
       setLoading(false);
     }
   };
+
+  if (loading) {
+    return (
+      <div className="min-h-[calc(100vh-120px)] flex items-center justify-center px-4 py-10">
+        <LoaderThree />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-[calc(100vh-120px)] flex items-center justify-center px-4 py-10">
